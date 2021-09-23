@@ -1,6 +1,6 @@
 import { Buffer } from "buffer";
 import * as iconv from "iconv-lite";
-import * as Jimp from "jimp";
+import { Image } from 'image-js'
 
 import BufferHelper from "./buffer-helper";
 
@@ -122,28 +122,27 @@ export async function exchange_image(
   let bytes = new BufferHelper();
 
   try {
-    // need to find other solution cause jimp is not working in RN
-    const raw_image = await Jimp.read(imagePath);
-    const img = raw_image.resize(250, 250).quality(60).greyscale();
+    const raw_image = await Image.load(imagePath);
+    const img = raw_image.resize({width: 250, height: 250}).grey();
 
-    let hex;
-    const nl = img.bitmap.width % 256;
-    const nh = Math.round(img.bitmap.width / 256);
+    const nl = img.width % 256;
+    const nh = Math.round(img.width / 256);
 
     // data
     const data = Buffer.from([0, 0, 0]);
     const line = Buffer.from([10]);
-    for (let i = 0; i < Math.round(img.bitmap.height / 24) + 1; i++) {
+    const rgba = img.getRGBAData()
+
+    for (let i = 0; i < Math.round(img.height / 24) + 1; i++) {
       // ESC * m nL nH bitmap
       let header = Buffer.from([27, 42, 33, nl, nh]);
       bytes.concat(header);
-      for (let j = 0; j < img.bitmap.width; j++) {
+      for (let j = 0; j < img.width; j++) {
         data[0] = data[1] = data[2] = 0; // Clear to Zero.
         for (let k = 0; k < 24; k++) {
-          if (i * 24 + k < img.bitmap.height) {
+          if (i * 24 + k < img.height) {
             // if within the BMP size
-            hex = img.getPixelColor(j, i * 24 + k);
-            if (Jimp.intToRGBA(hex).r <= threshold) {
+            if (rgba[j][i * 24 + k] <= threshold) {
               data[Math.round(k / 8)] += 128 >> k % 8;
             }
           }

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Buffer } from "buffer";
 import * as iconv from "iconv-lite";
-import * as Jimp from "jimp";
+import { Image } from 'image-js';
 import BufferHelper from "./buffer-helper";
 var init_printer_bytes = Buffer.from([27, 64]);
 var l_start_bytes = Buffer.from([27, 97, 0]);
@@ -134,7 +134,7 @@ export function exchange_text(text, options) {
 }
 export function exchange_image(imagePath, threshold) {
     return __awaiter(this, void 0, void 0, function () {
-        var bytes, raw_image, img, hex, nl, nh, data, line, i, header, j, k, dit, error_1;
+        var bytes, raw_image, img, nl, nh, data, line, rgba, i, header, j, k, dit, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -142,25 +142,24 @@ export function exchange_image(imagePath, threshold) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, Jimp.read(imagePath)];
+                    return [4 /*yield*/, Image.load(imagePath)];
                 case 2:
                     raw_image = _a.sent();
-                    img = raw_image.resize(250, 250).quality(60).greyscale();
-                    hex = void 0;
-                    nl = img.bitmap.width % 256;
-                    nh = Math.round(img.bitmap.width / 256);
+                    img = raw_image.resize({ width: 250, height: 250 }).grey();
+                    nl = img.width % 256;
+                    nh = Math.round(img.width / 256);
                     data = Buffer.from([0, 0, 0]);
                     line = Buffer.from([10]);
-                    for (i = 0; i < Math.round(img.bitmap.height / 24) + 1; i++) {
+                    rgba = img.getRGBAData();
+                    for (i = 0; i < Math.round(img.height / 24) + 1; i++) {
                         header = Buffer.from([27, 42, 33, nl, nh]);
                         bytes.concat(header);
-                        for (j = 0; j < img.bitmap.width; j++) {
+                        for (j = 0; j < img.width; j++) {
                             data[0] = data[1] = data[2] = 0; // Clear to Zero.
                             for (k = 0; k < 24; k++) {
-                                if (i * 24 + k < img.bitmap.height) {
+                                if (i * 24 + k < img.height) {
                                     // if within the BMP size
-                                    hex = img.getPixelColor(j, i * 24 + k);
-                                    if (Jimp.intToRGBA(hex).r <= threshold) {
+                                    if (rgba[j][i * 24 + k] <= threshold) {
                                         data[Math.round(k / 8)] += 128 >> k % 8;
                                     }
                                 }
