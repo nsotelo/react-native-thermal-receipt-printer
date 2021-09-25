@@ -46,6 +46,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { NativeModules, NativeEventEmitter, Platform } from "react-native";
+import receiptline from 'receiptline';
 import * as EPToolkit from "./utils/EPToolkit";
 var RNUSBPrinter = NativeModules.RNUSBPrinter;
 var RNBLEPrinter = NativeModules.RNBLEPrinter;
@@ -196,6 +197,22 @@ export var BLEPrinter = {
             }
         });
     }); },
+    printTest: function () { return __awaiter(void 0, void 0, void 0, function () {
+        var doc, printer, command;
+        return __generator(this, function (_a) {
+            doc = '{code:2012345678903;option:ean,hri}';
+            printer = {
+                cpl: 42,
+                encoding: 'cp437',
+                upsideDown: false,
+                gamma: 1.8,
+                command: 'escpos'
+            };
+            command = receiptline.transform(doc, printer);
+            RNBLEPrinter.printRawData(command, function (error) { return console.warn(error); });
+            return [2 /*return*/];
+        });
+    }); }
 };
 export var NetPrinter = {
     init: function () {

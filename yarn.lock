@@ -2164,7 +2164,7 @@
     "statuses" ">= 1.5.0 < 2"
     "toidentifier" "1.0.0"
 
-"iconv-lite@^0.6.2":
+"iconv-lite@^0.6.0", "iconv-lite@^0.6.2":
   "integrity" "sha512-2y91h5OpQlolefMPmUlivelittSWy0rP+oYVpn6A7GwVHNE8AWzoYOBNmlwks3LobaJxgHCYZAnyNo2GgpNRNQ=="
   "resolved" "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.2.tgz"
   "version" "0.6.2"
@@ -3699,6 +3699,11 @@
     "xmlbuilder" "^9.0.7"
     "xmldom" "^0.5.0"
 
+"pngjs@^5.0.0":
+  "integrity" "sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw=="
+  "resolved" "https://js.sotelo.dev/pngjs/-/pngjs-5.0.0.tgz"
+  "version" "5.0.0"
+
 "pod-install@^0.1.10":
   "integrity" "sha512-AwT6I0T2ISYydcsjQXzbLt6pRG7QgnVbXmnQl63Dxa+XE3T8WVahODFE9Riz7td9Et1CBAamTb1Nu0ILJvi9uA=="
   "resolved" "https://registry.npmjs.org/pod-install/-/pod-install-0.1.10.tgz"
@@ -3872,6 +3877,14 @@
     "esprima" "~4.0.0"
     "source-map" "~0.6.1"
     "tslib" "^2.0.1"
+
+"receiptline@^1.5.3":
+  "integrity" "sha512-6gt3gb68K5R8527RJRuqFSDMc5bA845HOaQ+5EDOhbSU243UiUlJnJqV74QwjS+/NIRCFIphIDQuSX+1v1ZoLg=="
+  "resolved" "https://js.sotelo.dev/receiptline/-/receiptline-1.5.3.tgz"
+  "version" "1.5.3"
+  dependencies:
+    "iconv-lite" "^0.6.0"
+    "pngjs" "^5.0.0"
 
 "rechoir@^0.6.2":
   "integrity" "sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q="

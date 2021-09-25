@@ -2,7 +2,8 @@
   "name": "react-native-thermal-receipt-printer",
   "version": "1.1.5",
   "description": "Fork of react-native-printer. A React Native Library to support USB/BLE/Net printer",
-  "main": "dist/index.js",
+  "main": "dist/index",
+  "typings": "dist/index",
   "source": "dist/index.js",
   "scripts": {
     "pods": "cd example && pod-install --quiet",
@@ -34,6 +35,7 @@
     "buffer": "^5.6.0",
     "iconv-lite": "^0.6.2",
     "image-js": "^0.33.0",
+    "receiptline": "^1.5.3",
     "string_decoder": "^1.3.0"
   },
   "devDependencies": {

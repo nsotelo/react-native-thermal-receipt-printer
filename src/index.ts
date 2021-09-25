@@ -1,4 +1,6 @@
 import { NativeModules, NativeEventEmitter, Platform } from "react-native";
+import receiptline from 'receiptline';
+
 
 import * as EPToolkit from "./utils/EPToolkit";
 
@@ -194,6 +196,28 @@ export const BLEPrinter = {
     const tmp = await imageToBuffer(imagePath);
     RNBLEPrinter.printRawData(tmp, (error: Error) => console.warn(error));
   },
+
+  printTest: async () => {
+   const doc = '{code:2012345678903;option:ean,hri}';
+
+    // printer example
+    const printer = {
+        cpl: 42,
+        encoding: 'cp437',
+        upsideDown: false,
+        gamma: 1.8,
+        command: 'escpos'
+    };
+    const command = receiptline.transform(doc, printer);
+    RNBLEPrinter.printRawData(command, (error: Error) => console.warn(error));
+
+    // // display example
+    // const display = {
+    //     cpl: 42,
+    //     encoding: 'cp437'
+    // };
+    // const svg = receiptline.transform(doc, display);
+  }
 };
 
 export const NetPrinter = {

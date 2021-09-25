@@ -35,6 +35,7 @@ export declare const BLEPrinter: {
     printText: (text: string, opts?: PrinterOptions) => void;
     printBill: (text: string, opts?: PrinterOptions) => void;
     printImage: (imagePath: string) => Promise<void>;
+    printTest: () => Promise<void>;
 };
 export declare const NetPrinter: {
     init: () => Promise<void>;
